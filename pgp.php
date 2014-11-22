@@ -90,8 +90,8 @@ if (isset($mybb->input['action'])) {
 		$query = $db->simple_select("pgpkeys", "pgpkey, fingerprint", "uid='" . $mybb->user['uid'] . "'");
 		if ($query->num_rows == 1) {
 			$returndata = $db->fetch_array($query);
-			$currentpgpkey = $returndata['pgpkey'];	
-			$currentfingerprint = $returndata['fingerprint'];
+			$currentpgpkey = htmlspecialchars($returndata['pgpkey']);	
+			$currentfingerprint = htmlspecialchars($returndata['fingerprint']);
 		}
 		
 		$template = $templates->get("PGPKey Add Page");
