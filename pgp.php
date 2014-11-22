@@ -73,8 +73,8 @@ if (isset($mybb->input['action'])) {
 			$bad_alert_template = $templates->get("PGPKey Alert Bad");
 			
 			//Whitelist address so user can't inject into DB or API calls
-			$key = $db->escape_string(preg_replace("/[^A-Za-z0-9]/", "", $mybb->input['pgp_key']));
-			$fingerprint = $db->escape_string(preg_replace("/[^A-Za-z0-9=+-\/]/", "", $mybb->input['pgp_fingerprint']));
+			$key = $db->escape_string($mybb->input['pgp_key']);
+			$fingerprint = $db->escape_string($mybb->input['pgp_fingerprint']);
 					
 			//Do some verification here
 			$query = $db->simple_select("pgpkeys", "fingerprint", "uid='" . $mybb->user['uid'] . "'");
