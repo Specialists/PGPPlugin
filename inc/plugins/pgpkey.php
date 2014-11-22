@@ -21,7 +21,7 @@ if (!defined("IN_MYBB")) {
 
 // Hooks
 $plugins->add_hook("member_profile_start", "pgpkey_member_profile_start");
-$plugins->add_hook("usercp_start", "phpkey_usercp_start");
+$plugins->add_hook("usercp_start", "pgpkey_usercp_start");
 
 function pgpkey_info() {
 	return array(
@@ -106,7 +106,8 @@ function pgpkey_activate() {
 		<h2>PGP Public Key</h2>
 		<br />
 		<a href="pgp.php?action=view">View your PGP Public Key</a><br />
-		<a href="pgp.php?action=addkey">Add or Change your PGP Public Key</a>
+		<a href="pgp.php?action=addkey">Add or Change your PGP Public Key</a><br />
+		<a href="pgp.php?action=deletekey">Remove your PGP Public Key</a>
 		<br />
 		{$footer}
 	</body>
@@ -137,6 +138,35 @@ function pgpkey_activate() {
 				</tr>
 				<tr>
 					<td><input class="button" type="submit" value="Add Key" /></td>
+				</tr>
+			</table>
+		</form>
+		{$footer}
+	</body>
+</html>',
+		"sid"		=> "-1"));
+		
+		$db->insert_query("templates", array(
+		"tid"		=> NULL,
+		"title"		=> "PGPKey Delete Page",
+		"template"	=> '<html>
+	<head>
+		<title>Delete PGP Key</title>
+		{$headerinclude}
+	</head>
+	<body>
+		{$header}
+		<h2>Delete your PGP key from your profile</h2>
+		<form method="post" action="pgp.php?action=deletekey&confirm=yes">
+			<table cellspacing="0" cellpadding="5">
+				<tr>
+					<td colspan=2>{$alert}</td>
+				</tr>
+				<tr>
+					<td>Are you sure you want to remove your PGP key from your profile?</td>
+				</tr>
+				<tr>
+					<td><input class="button" type="submit" value="Confirm" /></td>
 				</tr>
 			</table>
 		</form>
@@ -244,7 +274,7 @@ function pgpkey_member_profile_start() {
 function pgpkey_usercp_start() {
 	global $db, $pgpkey, $mybb;
 	
-	$query = $db->simple_select("pgpkeys", "fingerprint", "uid = '" . intval($mybb->input['uid']) . "'");
+	$query = $db->simple_select("pgpkeys", "fingerprint", "uid = '" . intval($mybb->user['uid']) . "'");
 	if ($query->num_rows == 1) {
 		$returndata = $db->fetch_array($query);
 		$fingerprint = $returndata['fingerprint'];	

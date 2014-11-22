@@ -77,7 +77,12 @@ if (isset($mybb->input['action'])) {
 			$footprint = $db->escape_string(preg_replace("/[^A-Za-z0-9=+-\/]/", "", $mybb->input['pgp_fingerprint']));
 					
 			//Do some verification here
-			$db->update_query("pgpkeys", array("pgpkey" => $key, "fingerprint" => $fingerprint), "uid = '" . $uid . "'");	
+			$query = $db->simple_select("pgpkeys", "fingerprint", "uid='" . $mybb->user['uid'] . "'");
+			if ($query->num_rows == 0) {
+				$db->insert_query("pgpkeys", array("pgpkey" => $key, "fingerprint" => $fingerprint, "uid" => $uid));	
+			} else {
+				$db->update_query("pgpkeys", array("pgpkey" => $key, "fingerprint" => $fingerprint), "uid = '" . $uid . "'");	
+			}
 			$alert_text = "PGP key added successfully!";
 			eval("\$alert=\"" . $good_alert_template . "\";");
 		}
@@ -92,6 +97,22 @@ if (isset($mybb->input['action'])) {
 		$template = $templates->get("PGPKey Add Page");
 		eval("\$page=\"" . $template . "\";");
 		output_page($page);
+	} else if ($mybb->input['action'] == "deletekey") {
+		if (isset($mybb->input['confirm'])) {
+			$good_alert_template = $templates->get("PGPKey Alert Good");
+			$bad_alert_template = $templates->get("PGPKey Alert Bad");
+			if($db->delete_query("pgpkeys", "uid='" . $mybb->user['uid'] . "'"))
+			{
+				$alert_text = "PGP key deleted successfully!";
+				eval("\$alert=\"" . $good_alert_template . "\";");
+			} else {
+				$alert_text = "Error deleting PGP key";
+				eval("\$alert=\"" . $bad_alert_template . "\";");
+			}
+		}
+		$template = $templates->get("PGPKey Delete Page");
+		eval("\$page=\"" . $template . "\";");
+		output_page($page);		
 	} else {
 		$template = $templates->get("PGPKey Default Page");
 		eval("\$page=\"" . $template . "\";");
