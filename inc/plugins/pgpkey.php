@@ -25,13 +25,13 @@ $plugins->add_hook("usercp_start", "pgpkey_usercp_start");
 
 function pgpkey_info() {
 	return array(
-		"name"			=> "User PGP Keys",
+		"name"		=> "User PGP Keys",
 		"description"	=> "Allow users to add a PGP key to their profile",
-		"website"		=> "",
-		"author"		=> "MeshCollider",
+		"website"	=> "",
+		"author"	=> "MeshCollider",
 		"authorsite"	=> "https://github.com/MeshCollider",
-		"version"		=> "v1.0.0",
-		"guid" 			=> "",
+		"version"	=> "v1.0.0",
+		"guid" 		=> "",
 		"compatibility" => "*"
 	);
 }
