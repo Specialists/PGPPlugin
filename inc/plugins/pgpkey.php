@@ -90,7 +90,7 @@ function pgpkey_activate() {
 	$db->insert_query("templates", array(
 		"tid"		=> NULL,
 		"title"		=> "PGPKey View Key",
-		"template"	=> '<p>Fingerprint: {$fingerprint}</p><p>Key:<br />{$key}</p>',
+		"template"	=> '<p>Fingerprint: {$fingerprint}</p><p>Key:</p><code>{$key}</code>',
 		"sid"		=> "-1"));
 				
 	$db->insert_query("templates", array(
