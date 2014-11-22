@@ -50,7 +50,7 @@ if (isset($mybb->input['action'])) {
 			
 		if ($query->num_rows > 0) {
 			$row = $db->fetch_array($query);
-			$key = $row['pgpkey'];
+			$key = nl2br($row['pgpkey']);
 			$fingerprint = $row['fingerprint'];
 			$template = $templates->get("PGPKey View Key");
 			eval("\$pgpkey .=\"" . $template . "\";");
