@@ -20,7 +20,7 @@ define("THIS_SCRIPT", "pgp.php");
 
 require_once "./global.php";
 
-//check if Omnicoin plugin is enabled
+//check if plugin is enabled
 $enabled_plugins = $cache->read("plugins");
 if (!array_key_exists("pgpkey", $enabled_plugins['active'])) {
 	die();
