@@ -30,7 +30,7 @@ function pgpkey_info() {
 		"website"		=> "",
 		"author"		=> "MeshCollider",
 		"authorsite"	=> "https://github.com/MeshCollider",
-		"version"		=> "v1.0.0",
+		"version"		=> "1.0",
 		"guid" 			=> "",
 		"compatibility" => "*"
 	);
@@ -43,7 +43,7 @@ function pgpkey_install() {
 		$db->query("CREATE TABLE IF NOT EXISTS `" . TABLE_PREFIX . "pgpkeys` (
 			`id` smallint(10) unsigned NOT NULL AUTO_INCREMENT,
 			`uid` varchar(10) NOT NULL DEFAULT '',
-			`pgpkey` varchar(4096) NOT NULL DEFAULT '',
+			`pgpkey` varchar(5000) NOT NULL DEFAULT '',
 			`fingerprint` varchar(40) NOT NULL,
 			PRIMARY KEY (`id`)
 			) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;");
@@ -131,7 +131,7 @@ function pgpkey_activate() {
 					<td colspan=2>{$alert}</td>
 				</tr>
 				<tr>
-					<td>Key:</td><td><textarea rows="8" columns="128" name="pgp_key">{$currentpgpkey}</textarea></td>
+					<td>Key:</td><td><textarea style="resize:none" rows="8" cols="64" name="pgp_key">{$currentpgpkey}</textarea></td>
 				</tr>
 				<tr>
 					<td>fingerprint:</td><td><input type="text" class="textbox" size="40" name="pgp_fingerprint" value="{$currentfingerprint}" /></td>
