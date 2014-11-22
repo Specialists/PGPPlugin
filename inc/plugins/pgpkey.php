@@ -44,7 +44,7 @@ function pgpkey_install() {
 			`id` smallint(10) unsigned NOT NULL AUTO_INCREMENT,
 			`uid` varchar(10) NOT NULL DEFAULT '',
 			`pgpkey` varchar(4096) NOT NULL DEFAULT '',
-			`fingerprint` varchar(16) NOT NULL,
+			`fingerprint` varchar(40) NOT NULL,
 			PRIMARY KEY (`id`)
 			) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;");
 	}
@@ -131,7 +131,7 @@ function pgpkey_activate() {
 					<td colspan=2>{$alert}</td>
 				</tr>
 				<tr>
-					<td>Key:</td><td><input type="text" class="textbox" size="40" name="pgp_key" value="{$currentpgpkey}" /></td>
+					<td>Key:</td><td><textarea rows="8" columns="128" name="pgp_key">{$currentpgpkey}</textarea></td>
 				</tr>
 				<tr>
 					<td>fingerprint:</td><td><input type="text" class="textbox" size="40" name="pgp_fingerprint" value="{$currentfingerprint}" /></td>
